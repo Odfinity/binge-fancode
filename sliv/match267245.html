@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://nothing18.vercel.app/validity.js"></script>
+  <title>SLIV Match</title>
+  <style>
+    html, body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        background-color: black;
+    }
+    .jwplayer {
+        position: absolute !important;
+    }
+    .jwplayer.jw-flag-aspect-mode {
+        min-height: 100%;
+        max-height: 100%;
+    }
+    #jwplayer-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+     #popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    .popup-content h2 {
+      margin: 0 0 10px;
+      color: #ff0000;
+    }
+
+    .popup-content p {
+      margin: 0 0 20px;
+    }
+
+    .popup-content button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .popup-content .join-btn {
+      background-color: #ff0000;
+      color: white;
+    }
+
+    .popup-content .close-btn {
+      background-color: #555;
+      color: white;
+    }
+  </style>
+  <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script> <!-- Replace with your JW Player Library ID -->
+</head>
+<body>
+
+  <div id="jwplayer-container"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const matchId = urlParams.get('id');
+
+    fetch("https://raw.githubusercontent.com/Sarcastic-GOD/SLIV-LIVE/main/data.json")
+      .then(res => res.json())
+      .then(data => {
+        const match = data.find(m => m.id === matchId);
+        const streamUrl = match?.Server3 || match?.TRAILER;
+
+        if (streamUrl) {
+          jwplayer("jwplayer-container").setup({
+            file: streamUrl,
+            width: "100%",
+            height: "100%",
+            autostart: true,
+            controls: true,
+            stretching: "fit",
+            displaytitle: false
+          });
+        }
+      });
+          // Close popup function
+    function closePopup() {
+      const popup = document.getElementById('popup');
+      popup.style.display = 'none';
+    }
+  </script>
+  <div id="popup">
+    <div class="popup-content">
+      <h2>Support Us!</h2>
+      <p>Join our Telegram channel @axtream_bingewav for more updates.</p>
+      <button class="join-btn" onclick="window.open('https://t.me/axtream_bingewav', '_blank')">Join Now</button>
+      <button class="close-btn" onclick="closePopup()">Already Joined</button>
+    </div>
+  </div>
+</body>
+</html>
