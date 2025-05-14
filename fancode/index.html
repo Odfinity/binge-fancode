@@ -186,7 +186,7 @@
         }
 
         function redirect(matchId, adfree) {
-            const url = `https://p.apeiria.net/~binge-fancode.html?id=${matchId}${adfree ? '&adfree' : ''}`;
+            const url = `/fancode/match?id=${matchId}${adfree ? '&adfree' : ''}`;
             window.location.href = url;
         }
 
